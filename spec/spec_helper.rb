@@ -9,12 +9,27 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'curate/spec_support'
 
 require 'rspec/rails'
+require 'rspec/autorun'
 require 'database_cleaner'
 require 'capybara/rspec'
 require 'webmock/rspec'
 require 'timeout'
 require 'active_fedora/test_support'
 
+if RUBY_VERSION>='2.6.0'
+  if Rails.version < '5'
+    class ActionController::TestResponse < ActionDispatch::TestResponse
+      def recycle!
+        # hack to avoid MonitorMixin double-initialize error:
+        @mon_mutex_owner_object_id = nil
+        @mon_mutex = nil
+        initialize
+      end
+    end
+  else
+    puts "Monkeypatch for ActionController::TestResponse no longer needed"
+  end
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -31,8 +46,7 @@ end
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  # This is now true by default.
-  # config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.infer_spec_type_from_file_location!
 

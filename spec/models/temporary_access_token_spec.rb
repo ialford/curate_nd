@@ -4,7 +4,7 @@ describe TemporaryAccessToken do
   subject { FactoryGirl.build(:temporary_access_token) }
 
   it 'can report how long tokens are valid after first use' do
-    expect(described_class.hours_until_expiry).to be_kind_of(Fixnum)
+    expect(described_class.hours_until_expiry).to be_kind_of(Integer)
   end
 
   context 'test support' do
