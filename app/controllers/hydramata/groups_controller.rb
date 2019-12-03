@@ -22,6 +22,7 @@ class Hydramata::GroupsController < ApplicationController
 
   def index
     params[:per_page] ||= 50
+    # admin users should see all groups, so we remove access controls in the search
     if current_user.manager?
       Hydramata::GroupsController.solr_search_params_logic -= [:add_access_controls_to_solr_params]
     else
@@ -71,9 +72,14 @@ class Hydramata::GroupsController < ApplicationController
   end
 
   def destroy
-    title = @group.to_s
-    @group.destroy
-    after_destroy_response(title)
+    if @group.is_authority_group?
+      flash[:error] = "Groups linked to an Authority Group may not be destroyed."
+      redirect_to hydramata_groups_path
+    else
+      title = @group.to_s
+      @group.destroy
+      after_destroy_response(title)
+    end
   end
 
   def setup_form

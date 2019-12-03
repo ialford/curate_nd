@@ -74,6 +74,8 @@ CurateNd::Application.routes.draw do
   match "show/:id" => "common_objects#show", via: :get, as: "common_object"
   match "show/stub/:id" => "common_objects#show_stub_information", via: :get, as: "common_object_stub_information"
   match 'users/:id/edit' => 'users#edit', via: :get, as: 'edit_user'
+  match 'users/:id/refresh' => 'users#refresh_access', via: :get, as: 'refresh_user'
+
   match 'downloads/:id(/:datastream_id)(.:format)' => 'downloads#show', via: :get, as: 'download'
   match 'catalog/hierarchy/admin_unit_hierarchy_sim/facet' => 'catalog#departments', via: :get, id: 'admin_unit_hierarchy_sim'
   match 'catalog/hierarchy/:id/facet' => 'catalog#hierarchy_facet', via: :get, as: 'catalog_hierarchy_facet'
@@ -105,6 +107,9 @@ CurateNd::Application.routes.draw do
       resources :ingest_osf_archives, only: [:new, :create]
       resources :batch_ingest, only: [:index]
       resources :fixity, only: [:index]
+      resources :authority_groups, except: [:destroy]
+      post 'authority_groups/refresh/:id', as: 'refresh', controller: 'authority_groups', action: 'refresh'
+      get 'authority_groups/refresh/:id', controller: 'authority_groups', action: 'refresh'
     end
 
     constraints CurateND::AdminAPIConstraint do

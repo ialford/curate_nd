@@ -18,6 +18,11 @@ class UsersController < ApplicationController
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def refresh_access
+    RefreshPermissions.reinitialize
+    redirect_to user_profile_path
+  end
+
   helper_method :resource_name, :resource, :devise_mapping
 
 end

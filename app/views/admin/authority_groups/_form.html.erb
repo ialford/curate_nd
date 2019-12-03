@@ -1,0 +1,23 @@
+<% action_name == "new" ? disabled = false : disabled = true %>
+
+<%= simple_form_for(@admin_authority_group) do |f| %>
+  <%= f.error_notification %>
+
+   <fieldset>
+    <div class="form-inputs">
+      <%= f.input :auth_group_name, label: "Authority Group Name", hint: "The group name used in code to control authority to functions throughout the application. The name cannot be changed.", disabled: disabled %>
+      <%= f.input :description, hint: "The authority options in the application which are controlled by this group.", input_html: { class: 'input-xxlarge' } %>
+      <%= f.input :controlling_class_name, label: "Controlling Class Name", hint: "The Class in the application which controls loading and use of the Authority Group." %>
+      <%= f.input :associated_group_pid, label: "Associated Group Pid", hint: "First create your group of users, and then enter pid in the format und:xxxxxxxx" %>
+    </div>
+  </fieldset>
+
+   <div class="form-actions">
+     <% if @admin_authority_group.new_record? %>
+       <% button_label = "Create Authority Group"  %>
+     <% else %>
+       <% button_label = "Update Authority Group"  %>
+     <% end %>
+     <%= f.button :submit, button_label, class: 'btn btn-danger' %>
+  </div>
+<% end %>

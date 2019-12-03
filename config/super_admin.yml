@@ -1,0 +1,10 @@
+development: &DEFAULT
+  super_admin_usernames:
+  - <%= ENV['USER'] %>
+test: &TEST
+  <<: *DEFAULT
+  super_admin_usernames:
+  - <%= ENV['USER'] %>
+  - an_admin_username
+ci:
+  <<: *TEST

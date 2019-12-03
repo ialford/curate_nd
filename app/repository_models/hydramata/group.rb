@@ -98,6 +98,10 @@ class Hydramata::Group < ActiveFedora::Base
     end
   end
 
+  def is_authority_group?
+    !Admin::AuthorityGroup.find_by(associated_group_pid: id).nil?
+  end
+
   private
 
   def remove_associations

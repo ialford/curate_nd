@@ -22,6 +22,12 @@ class Ability
       else
         cannot [:manage], TemporaryAccessToken
       end
+
+      if ::Admin::SuperAdmin.include?(current_user)
+        can [:manage], Admin::AuthorityGroup
+      else
+        cannot [:manage], Admin::AuthorityGroup
+      end
     end
   end
 

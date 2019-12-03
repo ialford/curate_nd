@@ -1,0 +1,2 @@
+module Admin::AuthorityGroupHelper
+end

@@ -1,0 +1,13 @@
+<% content_for :page_title, construct_page_title('Authority Groups') %>
+<% content_for :page_header do %>
+  <ul class="breadcrumb">
+    <li><%= link_to 'CurateND', root_path %> <span class="divider">/</span></li>
+    <li><span class="active">Authority Groups List</span></li>
+  </ul>
+
+   <h1>Authority Groups</h1>
+<% end %>
+
+<%= link_to 'Create New Group', new_admin_authority_group_path, { class: "btn btn-success" } %>
+
+<%= render partial: 'groups' %>
