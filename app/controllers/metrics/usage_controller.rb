@@ -76,7 +76,7 @@ module Metrics
         item = ActiveFedora::Base.load_instance_from_solr(id)
         item_type = item.human_readable_type
         item_type = "File" if item_type == "Generic File"
-        return item_type + ": " + item.title
+        return "#{item_type}: #{item}"
       rescue ActiveFedora::ObjectNotFoundError
         return nil
       end
