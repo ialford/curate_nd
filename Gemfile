@@ -89,9 +89,9 @@ group :default do
   gem 'memory_profiler'
 end
 
-group :headless do
-  gem 'clamav'
-end
+#group :headless do
+ # gem 'clamav'
+#end
 
 group :orcid do
   gem 'railties', '~> 4.0'
