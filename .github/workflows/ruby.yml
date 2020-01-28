@@ -28,4 +28,4 @@ jobs:
         sudo apt-get install -y libmysqlclient-dev
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rake
+        bundle exec rake curatend:ci_prep RAILS_ENV=ci && bundle exec rake spec curatend:lint_erb SPEC_OPTS="--tag ~js:true" RAILS_ENV=ci
